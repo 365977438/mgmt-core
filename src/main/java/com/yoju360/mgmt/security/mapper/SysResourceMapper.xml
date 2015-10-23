@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoju360.mgmt.security.mapper.SysResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.yoju360.mgmt.security.model.SysResource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="icon_class" property="iconClass" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="system_name" property="systemName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="obj_version" property="objVersion" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="and (" suffix=")" >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </trim>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, title, type, parent_id, order_num, icon_class, url, system_name, create_time, 
+    created_by, is_deleted, obj_version, update_time, updated_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yoju360.mgmt.security.model.SysResourceExample" >
+    select
+    <if test="example !=null and example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_resource where is_deleted = false 
+    <if test="example != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example != null and example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_resource
+    where id = #{id,jdbcType=BIGINT}
+     and is_deleted = false 
+  </select>
+  <update id="deleteByExample" parameterType="com.yoju360.mgmt.security.model.SysResourceExample" >
+    update sys_resource set is_deleted = true 
+    <if test="example != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <insert id="add" parameterType="com.yoju360.mgmt.security.model.SysResource" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="iconClass != null" >
+        icon_class,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="systemName != null" >
+        system_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="objVersion != null" >
+        obj_version,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="iconClass != null" >
+        #{iconClass,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="systemName != null" >
+        #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="objVersion != null" >
+        #{objVersion,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExample" parameterType="map" >
+    update sys_resource
+    set id = #{record.id,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=SMALLINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      icon_class = #{record.iconClass,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      system_name = #{record.systemName,jdbcType=VARCHAR},
+      obj_version =  obj_version + 1 ,
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      updated_by = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="example != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="update" parameterType="com.yoju360.mgmt.security.model.SysResource" >
+    update sys_resource
+    set code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=SMALLINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      icon_class = #{iconClass,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      system_name = #{systemName,jdbcType=VARCHAR},
+      obj_version =  obj_version + 1 ,
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="count" resultType="java.lang.Integer" >
+    select count(*) from sys_resource where is_deleted = false
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_resource where is_deleted = false
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_resource where is_deleted = false
+     limit #{start},#{count} 
+  </select>
+  <select id="selectByExamplePage" resultMap="BaseResultMap" parameterType="map" >
+    select * from (select 
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_resource where is_deleted = false 
+    <if test="example.oredCriteria != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    ) a limit #{start},#{count} 
+  </select>
+  <update id="delete" parameterType="java.lang.Long" >
+    update sys_resource
+    set is_deleted = true where is_deleted = false and id = #{_parameter}
+  </update>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from sys_resource where is_deleted = false 
+    <if test="example != null and example.oredCriteria != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="isUniqueAmongOthers" parameterType="map" resultType="java.lang.Boolean" >
+    select count(1) <![CDATA[ <= ]]> 0 from sys_resource where ${columnName} = #{value} and is_deleted = false 
+    <if test="id != null" >
+       and id != #{id}
+    </if>
+  </select>
+  
+  <select id="findMenuByUsername" parameterType="java.lang.String" resultType="com.yoju360.mgmt.security.model.SysResource" >
+    select distinct r.id, r.code, r.title, r.parent_id as parentId, r.url 
+    from sys_resource r,
+    sys_role_resource p,
+    sys_user_role m,
+    sys_user u 
+    where r.is_deleted=false and p.is_deleted=false and m.is_deleted=false and u.is_deleted=false 
+    and r.id=p.resource_id and p.role_id=m.role_id and m.user_id = u.id 
+    and (r.type=0 or r.type=1) and u.username= #{username} 
+   	<if test="systemName != null">
+   		and r.system_name = #{systemName}
+   	</if>
+  </select>
+  
+  <select id="findFunctionByUserId" parameterType="map" resultType="com.yoju360.mgmt.security.model.SysResource" >
+    select distinct r.id, r.code, r.title
+    from sys_resource r,
+    sys_role_resource p,
+    sys_user_role m,
+    sys_user u, 
+    sys_role n
+    where r.is_deleted=false and p.is_deleted=false and m.is_deleted=false and u.is_deleted=false and n.is_deleted=false 
+    and r.id=p.resource_id and p.role_id=m.role_id and m.user_id = u.id and n.id = m.role_id 
+    and r.type=#{resType} 
+   	<if test="systemName != null">
+   		and r.system_name = #{systemName}
+   	</if>
+    and u.id= #{userId} and n.status= #{roleStatus} order by r.id
+  </select>
+  
+  <select id="findMenuByUserIdAndSystem" parameterType="map" resultType="com.yoju360.mgmt.security.model.SysResource" >
+    select distinct r.id, r.code, r.title, r.parent_id as parentId, r.url 
+    from sys_resource r,
+    sys_role_resource p,
+    sys_user_role m,
+    sys_user u, 
+    sys_role n
+    where r.is_deleted=false and p.is_deleted=false and m.is_deleted=false and u.is_deleted=false and n.is_deleted=false 
+    and r.id=p.resource_id and p.role_id=m.role_id and m.user_id = u.id and n.id = m.role_id 
+    and (r.type=0 or r.type=1) and u.id= #{userId} 
+   	<if test="systemName != null">
+   		and r.system_name = #{systemName}
+   	</if>
+    and n.status= #{roleStatus} order by r.id
+  </select>
+  
+  <select id="getTreeDataByParentId" parameterType="map" resultType="hashmap">
+  	select r.id, r.type, r.code, r.title, r.parent_id as parentId, r.url, 
+  		(select count(1) from sys_resource where is_deleted = false  
+	    	<if test="systemName != null">
+	    		and system_name = #{systemName}
+	    	</if>
+		    and parent_id = r.id) as childCount
+  	from sys_resource r
+  	where r.is_deleted = false 
+   	<if test="systemName != null">
+   		and r.system_name = #{systemName}
+   	</if>
+  	<if test="parentId != 0">
+  		and r.parent_id = #{parentId} 
+  	</if> 
+    <if test="parentId == 0">
+    	and (r.parent_id = 0 or r.parent_id is null)
+    </if>
+    order by r.order_num
+  </select>
+  
+  <select id="getAuthorizedTreeData" parameterType="map" resultType="hashmap">
+  	select r.id, r.type, r.code, r.title, r.parent_id as parentId, r.url, 
+  		(select count(1) from sys_resource where is_deleted = false and parent_id = r.id) as childCount,
+  		(select count(1)>0 from sys_role_resource o inner join sys_role p on o.role_id = p.id and p.id=#{roleId} and p.is_deleted = false where o.resource_id = r.id and o.is_deleted=false) as granted 
+  	from sys_resource r
+  	where r.is_deleted = false 
+   	<if test="systemName != null">
+   		and r.system_name = #{systemName}
+   	</if>
+  	<if test="parentId != 0">
+  		and r.parent_id = #{parentId} 
+  	</if> 
+    <if test="parentId == 0">
+    	and (r.parent_id = 0 or r.parent_id is null)
+    </if>
+    order by r.order_num
+  </select>
+  
+  <select id="getUserMenuTreeData" parameterType="map" resultType="com.yoju360.mgmt.security.model.SysResource">
+  	select r.id, r.type, r.code, r.title, r.parent_id as parentId, r.url, r.icon_class as iconClass, r.system_name as systemName 
+  	from sys_resource r, sys_role_resource o, sys_role p, sys_user_role u
+  	where r.type in (0, 1) and o.resource_id = r.id and p.id = o.role_id and p.id = u.role_id and u.user_id = #{userId} 
+  	and o.is_deleted=false and p.is_deleted = false and u.is_deleted = false and r.is_deleted = false  
+   	<if test="systemName != null">
+   		and r.system_name = #{systemName} 
+   	</if>
+  	order by r.parent_id, r.order_num, r.id
+  </select>
+  
+  <select id="getSystems" parameterType="map" resultType="com.yoju360.mgmt.security.model.SysResource">
+  	select r.id, r.type, r.code, r.title, r.parent_id as parentId, r.url, r.icon_class as iconClass, r.system_name as systemName 
+  	from sys_resource r, sys_user_role ur, sys_role_resource rr 
+  	where ur.user_id = #{userId} and ur.role_id = rr.role_id and rr.resource_id = r.id and r.type = 0 
+  		and r.is_deleted = false and ur.is_deleted = false and rr.is_deleted = false
+  	order by r.parent_id, r.order_num, r.id
+  </select>
+</mapper>
