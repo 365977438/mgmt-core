@@ -38,8 +38,8 @@ import com.yoju360.mgmt.security.service.SysResourceService;
 public class SysResourceController extends BaseController<SysResource>{
 	@Autowired
 	SysResourceService sysResourceService;
-	@Autowired
-	InvocationSecurityMetadataSource securityMetadataSource;
+//	@Autowired
+//	InvocationSecurityMetadataSource securityMetadataSource;
 	
 	@RequestMapping(value = "/index.do")
     public ModelAndView index(HttpServletRequest request) throws Exception {
@@ -101,7 +101,7 @@ public class SysResourceController extends BaseController<SysResource>{
 		SysResource model = getRequestObject(request, SysResource.class, "id", sysResourceService);
 		try {
 			sysResourceService.save(model, model.getId()==null || model.getId()==0L);
-			securityMetadataSource.updateResource();
+//			securityMetadataSource.updateResource();
 			writeResponse("保存成功", true, response);
 		} catch (Exception e) {
 			writeResponse("保存失败: " + e.getMessage(), false, response);

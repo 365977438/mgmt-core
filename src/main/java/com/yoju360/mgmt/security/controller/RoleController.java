@@ -24,7 +24,6 @@ import com.yoju360.mgmt.core.controller.FueluxTree.TreeData;
 import com.yoju360.mgmt.core.controller.FueluxTree.TreeItem;
 import com.yoju360.mgmt.core.controller.JDatatableOutput;
 import com.yoju360.mgmt.core.controller.JDatatableParams;
-import com.yoju360.mgmt.security.InvocationSecurityMetadataSource;
 import com.yoju360.mgmt.security.model.SysRole;
 import com.yoju360.mgmt.security.model.SysRoleExample;
 import com.yoju360.mgmt.security.service.SysResourceService;
@@ -44,8 +43,8 @@ public class RoleController extends BaseController<SysRole>{
 	SysResourceService sysResourceService;
 	@Autowired
 	SysRoleResourceService sysRoleResourceService;
-	@Autowired
-	InvocationSecurityMetadataSource securityMetadataSource;
+//	@Autowired
+//	InvocationSecurityMetadataSource securityMetadataSource;
 	
 	@RequestMapping(value = "/index.do")
     public ModelAndView index(HttpServletRequest request) throws Exception {
@@ -112,7 +111,7 @@ public class RoleController extends BaseController<SysRole>{
 			//depends on the tree is fully loaded! If some are invisible yet, only handle the visible part
 			List<Long> selected = getRequestArray(request, "granted", Long.class);
 			sysRoleResourceService.save(id, selected);
-			securityMetadataSource.updateResource();
+//			securityMetadataSource.updateResource();
 			writeResponse("保存成功", true, response);
 		} catch (Exception e) {
 			writeResponse("保存失败: " + e.getMessage(), false, response);
