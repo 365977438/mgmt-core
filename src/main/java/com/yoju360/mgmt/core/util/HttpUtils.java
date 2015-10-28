@@ -128,4 +128,11 @@ public class HttpUtils {
 	public static void close() throws IOException {
 		httpClient.close();
 	}
+	
+	public void finalize() {
+		try {
+			httpClient.close();
+		} catch (IOException e) {
+		}
+	}
 }
