@@ -3,6 +3,7 @@
  */
 package com.yoju360.mgmt.security;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -139,7 +140,7 @@ public class CasUserAttributeDao extends AbstractFlatteningPersonAttributeDao {
 
 	@Override
 	public Set<String> getPossibleUserAttributeNames() {
-		return null;
+		return Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(ATTRIBUTE_USER, ATTRIBUTE_SYSTEMS, ATTRIBUTE_MENU, ATTRIBUTE_OPERATIONS, ATTRIBUTE_ROLES, ATTRIBUTE_AUTH_DATA)));
 	}
 
 	@Override
