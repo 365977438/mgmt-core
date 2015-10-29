@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,7 +49,7 @@ public class IndexController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String mainPage(HttpServletRequest request, @CookieValue(value="CURRENT_SYSTEM", required=false) String curSys, ModelMap model) {
+	public String mainPage(HttpServletRequest request, HttpServletResponse response, @CookieValue(value="CURRENT_SYSTEM", required=false) String curSys, ModelMap model) {
 		SecurityUser su = (SecurityUser)SecurityUtils.getCurrentUser();
 		
 		model.addAttribute("user", su==null?null:su.getUserObject());
@@ -58,22 +59,25 @@ public class IndexController {
 		
 		model.put("systems", systems);
 		String selectedSystem = null; // 最终要显示的系统
+		
 		if (curSys != null) {
 			selectedSystem = curSys;
 		} else if (SYSTEM_NAME != null) {
 			selectedSystem = SYSTEM_NAME;
-		} else {
-			currentSystem = (systems != null && systems.size() > 0) ? systems.get(0):null;
-			SecurityUtils.setCurrentSystemName(currentSystem!=null?currentSystem.getCode():null);
-			selectedSystem = currentSystem.getCode();
 		}
 		
-		for (SysResource sys : systems) {
-			if (sys.getCode().equals(selectedSystem)) {
-				currentSystem = sys;
-				break;
+		if (selectedSystem!=null) { // find by code
+			for (SysResource sys : systems) {
+				if (sys.getCode().equals(selectedSystem)) {
+					currentSystem = sys;
+					break;
+				}
 			}
+		} else { // use the first
+			currentSystem = (systems != null && systems.size() > 0) ? systems.get(0):null;
+			selectedSystem = currentSystem!=null?currentSystem.getCode():null;
 		}
+		
 		SecurityUtils.setCurrentSystemName(selectedSystem);
 		
 		model.put("currentSystem", currentSystem);
@@ -94,12 +98,15 @@ public class IndexController {
 		SecurityUtils.setUserOperations(operations);
 		model.put("userOperations", operations);
 		
-		if (curSys == null || (SYSTEM_NAME != null && curSys.equals(SYSTEM_NAME))) {
+		if (curSys == null || (SYSTEM_NAME != null && curSys.equals(SYSTEM_NAME))) { // 优先访问当前系统
 			return "main";
-		} else if (currentSystem!=null) { // 须跳转
+		} else if (currentSystem!=null && currentSystem.getUrl().startsWith("http")) { // 须跳转到新系统
 			return "redirect:" + currentSystem.getUrl();
-		} else {
-			return "main";
+		} else { // 不可以显示别的系统的菜单，重置cookie
+			Cookie cookie=new Cookie("CURRENT_SYSTEM",SYSTEM_NAME);
+			cookie.setMaxAge(-1);
+			response.addCookie(cookie);
+			return "redirect:#";
 		}
 	}
 }

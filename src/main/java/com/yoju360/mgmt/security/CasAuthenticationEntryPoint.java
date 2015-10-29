@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jasig.cas.client.util.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
@@ -32,6 +34,7 @@ import org.springframework.util.Assert;
  * @author evan
  */
 public class CasAuthenticationEntryPoint implements AuthenticationEntryPoint, InitializingBean {
+	private static final Logger logger = LoggerFactory.getLogger(CasAuthenticationEntryPoint.class);
     //~ Instance fields ================================================================================================
     private ServiceProperties serviceProperties;
 
@@ -67,11 +70,13 @@ public class CasAuthenticationEntryPoint implements AuthenticationEntryPoint, In
 
         String ua = servletRequest.getHeader("User-Agent");
         if (ua!=null && ua.contains("MicroMessenger")) { // for wechat redirect
-        	response.setHeader("Content-Type", "text/html;charset=utf-8");
-        	response.setHeader("Pragma", "public");
-    		response.setHeader("Expires", "0");
-    		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        	response.getWriter().write("<script language=\"javascript\">location.href=\"" + redirectUrl + "\"</script>");
+//        	response.setHeader("Content-Type", "text/html;charset=utf-8");
+//        	response.setHeader("Pragma", "public");
+//    		response.setHeader("Expires", "0");
+//    		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//        	response.getWriter().write("<script language=\"javascript\">location.href=\"" + redirectUrl + "\"</script>");
+        	logger.info("Wechat login");
+        	response.sendRedirect(redirectUrl);
         } else {
         	response.sendRedirect(redirectUrl);
         }
