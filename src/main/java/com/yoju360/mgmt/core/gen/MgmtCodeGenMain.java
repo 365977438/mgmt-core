@@ -87,6 +87,7 @@ public class MgmtCodeGenMain {
 			String idField = modelEle.getAttribute("idField");
 			String idFieldCap = StringUtils.capitalize(idField);
 			String modelDesc = modelEle.getAttribute("name");
+			String mgmtCode = modelEle.getAttribute("mgmtCode");
 			
 			System.out.println("Processing model: " + modelNameFull);
 			
@@ -100,6 +101,7 @@ public class MgmtCodeGenMain {
 			dataMap.put("modelNameUncamel", modelNameUncamel);
 			dataMap.put("idFieldCap", idFieldCap);
 			dataMap.put("idField", idField);
+			dataMap.put("mgmtCode", mgmtCode);
 			
 			writeTemp(dataMap, CONTROLLER_TEMPLATE, modelName + "Controller.java");
 			

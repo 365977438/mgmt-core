@@ -159,42 +159,54 @@
 						}},
 						 {"name": "operation", "data": "${idField}", render: function ( data, type, row ) {
 							    if ( type === 'display' ) {
-							        var html= '<div class="hidden-sm hidden-xs action-buttons">\
-												<a class="blue" title="查看" href="javascript:ns_${modelNameUncamel}.viewDetail(' + data + ');">\
+							        var html= '<div class="hidden-sm hidden-xs action-buttons">';
+							        	<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_VIEW')>
+												html += '<a class="blue" title="查看" href="javascript:ns_${modelNameUncamel}.viewDetail(' + data + ');">\
 											<i class="ace-icon fa fa-search-plus bigger-130"></i>\
-										</a>\
-										<a class="green" title="编辑" href="javascript:ns_${modelNameUncamel}.edit(' + data + ');">\
+										</a>';
+										</${"#"}if>
+										<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_EDIT')>
+											html += '<a class="green" title="编辑" href="javascript:ns_${modelNameUncamel}.edit(' + data + ');">\
 											<i class="ace-icon fa fa-pencil bigger-130"></i>\
-										</a>\
-										<a class="red" title="删除" href="javascript:ns_${modelNameUncamel}.del(' + data + ');">\
+										</a>';
+										</${"#"}if>
+										<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_DEL')>
+											html += '<a class="red" title="删除" href="javascript:ns_${modelNameUncamel}.del(' + data + ');">\
 											<i class="ace-icon fa fa-trash-o bigger-130"></i>\
-										</a>\
-									</div>\
+										</a>';
+										</${"#"}if>
+									html += '</div>\
 									<div class="hidden-md hidden-lg">\
 										<div class="inline pos-rel">\
-											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">\
-												<li>\
+											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">';
+												<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_VIEW')>
+												html += '<li>\
 													<a title="查看" href="javascript:ns_${modelNameUncamel}.viewDetail(' + data + ');" class="tooltip-info" data-rel="tooltip" title="View">\
 														<span class="blue">\
 															<i class="ace-icon fa search-plus bigger-120"></i>\
 														</span>\
 													</a>\
-												</li>\
-												<li>\
+												</li>';
+												</${"#"}if>
+												<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_EDIT')>
+												html += '<li>\
 													<a title="编辑" href="javascript:ns_${modelNameUncamel}.edit(' + data + '); class="tooltip-success" data-rel="tooltip" title="Edit">\
 														<span class="green">\
 															<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>\
 														</span>\
 													</a>\
-												</li>\
-												<li>\
+												</li>';
+												</${"#"}if>
+												<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_DEL')>
+												html += '<li>\
 													<a title="删除" href="javascript:ns_${modelNameUncamel}.del(' + data + ');" class="tooltip-error" data-rel="tooltip" title="Delete">\
 														<span class="red">\
 															<i class="ace-icon fa fa-trash-o bigger-120"></i>\
 														</span>\
 													</a>\
-												</li>\
-											</ul>\
+												</li>';
+												</${"#"}if>
+											html += '</ul>\
 										</div>\
 									</div>';
 									return html;
@@ -260,6 +272,7 @@
 				<th><label class="pos-rel"> <input
 						type="checkbox" class="ace" /> <span class="lbl"></span>
 				</label></th>
+				<th>操作</th>
 				<#list modelFields as field>
 				<#if !field.id && field.name!="class"> 
 				<th>${field.name}</th>

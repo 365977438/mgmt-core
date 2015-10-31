@@ -61,7 +61,7 @@ public class ${modelName}Controller extends BaseController<${modelName}>{
     public void save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		${modelName} model = getRequestObject(request, ${modelName}.class, "${idField}", ${modelNameUncap}Service);
 		try {
-			${modelNameUncap}Service.save(model, model.get${idFieldCap}()==null);
+			${modelNameUncap}Service.save(model, model.get${idFieldCap}()==null || model.get${idFieldCap}().equals(0L));
 			writeResponse("保存成功", true, response);
 		} catch (Exception e) {
 			writeResponse("保存失败: " + e.getMessage(), false, response);

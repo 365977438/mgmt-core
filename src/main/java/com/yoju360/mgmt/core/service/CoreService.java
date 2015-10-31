@@ -77,18 +77,50 @@ public interface CoreService<T extends BaseModel, E> {
 	 */
 	List<T> findAll();
 
+	/**
+	 * 该实体是否唯一
+	 * @param selfId 实体Id
+	 * @param columnName 用于鉴别唯一性的字段名
+	 * @param value 唯一值
+	 * @return
+	 */
 	boolean isUniqueAmongOthers(Long selfId, String columnName, Object value);
-
+	/**
+	 * 所有记录总数(未删除)
+	 * @return
+	 */
 	int countAll();
-
+	/**
+	 * 由条件过滤后的记录数
+	 * @param example
+	 * @return
+	 */
 	int countByExample(E example);
-
+	/**
+	 * 按Example来查找实体列表，并分页返回
+	 * @param example
+	 * @param start
+	 * @param count
+	 * @return
+	 */
 	List<T> findByExamplePage(E example, int start, int count);
-
+	/**
+	 * 分页返回实体
+	 * @param start
+	 * @param count
+	 * @return
+	 */
 	List<T> findByPage(int start, int count);
-
+	/**
+	 * 该实体管理模块的名称
+	 * @return
+	 */
 	String getModuleName();
-
+	/**
+	 * 根据条件查找实体列表
+	 * @param example
+	 * @return
+	 */
 	List<T> findByExample(E example);
 
 }
