@@ -2,6 +2,8 @@ package com.yoju360.mgmt.security.model;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.yoju360.mgmt.core.model.BaseModel;
 
 public class SysRole extends BaseModel {
@@ -14,17 +16,17 @@ public class SysRole extends BaseModel {
     private String description;
 
     private Boolean status;
-
+    @JsonIgnore
     private Date createTime;
-
+    @JsonIgnore
     private String createdBy;
-
+    @JsonIgnore
     private Boolean isDeleted;
-
+    @JsonIgnore
     private Integer objVersion;
-
+    @JsonIgnore
     private Date updateTime;
-
+    @JsonIgnore
     private String updatedBy;
 
     public Long getId() {

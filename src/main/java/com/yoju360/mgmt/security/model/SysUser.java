@@ -3,6 +3,8 @@ package com.yoju360.mgmt.security.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.yoju360.mgmt.core.model.BaseModel;
 
 public class SysUser extends BaseModel implements Serializable {
@@ -27,21 +29,21 @@ public class SysUser extends BaseModel implements Serializable {
     private String telephone;
 
     private String officeLocation;
-
+    @JsonIgnore
     private Integer loginFailedCount;
 
     private Long departmentId;
-
+    @JsonIgnore
     private Date createTime;
-
+    @JsonIgnore
     private String createdBy;
-
+    @JsonIgnore
     private Boolean isDeleted;
-
+    @JsonIgnore
     private Integer objVersion;
-
+    @JsonIgnore
     private Date updateTime;
-
+    @JsonIgnore
     private String updatedBy;
 
     private Boolean status;
