@@ -103,7 +103,7 @@ public class IndexController {
 		} else if (currentSystem!=null && currentSystem.getUrl().startsWith("http")) { // 须跳转到新系统
 			return "redirect:" + currentSystem.getUrl();
 		} else { // 不可以显示别的系统的菜单，重置cookie
-			Cookie cookie=new Cookie("CURRENT_SYSTEM",SYSTEM_NAME);
+			Cookie cookie=new Cookie("CURRENT_SYSTEM",selectedSystem);
 			cookie.setMaxAge(-1);
 			response.addCookie(cookie);
 			return "redirect:#";
