@@ -49,7 +49,7 @@ public class IndexController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String mainPage(HttpServletRequest request, HttpServletResponse response, @CookieValue(value="CURRENT_SYSTEM", required=false) String curSys, ModelMap model) {
+	public String mainPage(HttpServletRequest request, HttpServletResponse response, /*@CookieValue(value="CURRENT_SYSTEM", required=false) String curSys,*/ ModelMap model) {
 		SecurityUser su = (SecurityUser)SecurityUtils.getCurrentUser();
 		
 		model.addAttribute("user", su==null?null:su.getUserObject());
@@ -60,9 +60,10 @@ public class IndexController {
 		model.put("systems", systems);
 		String selectedSystem = null; // 最终要显示的系统
 		
-		if (curSys != null) {
-			selectedSystem = curSys;
-		} else if (SYSTEM_NAME != null) {
+//		if (curSys != null) {
+//			selectedSystem = curSys;
+//		} else 
+		if (SYSTEM_NAME != null) {
 			selectedSystem = SYSTEM_NAME;
 		}
 		
@@ -98,6 +99,7 @@ public class IndexController {
 		SecurityUtils.setUserOperations(operations);
 		model.put("userOperations", operations);
 		
+		/*
 		if (curSys == null || (SYSTEM_NAME != null && curSys.equals(SYSTEM_NAME))) { // 优先访问当前系统
 			return "main";
 		} else if (currentSystem!=null && currentSystem.getUrl().startsWith("http")) { // 须跳转到新系统
@@ -108,5 +110,7 @@ public class IndexController {
 			response.addCookie(cookie);
 			return "redirect:#";
 		}
+		*/
+		return "main";
 	}
 }
