@@ -373,7 +373,7 @@
    	<if test="systemName != null">
    		and r.system_name = #{systemName} 
    	</if>
-   	order by r.system_name, r.type, r.order_num , r.id
+   	order by r.system_name, r.type, r.parent_id, r.order_num , r.id
   </select>
   
   <select id="getSystems" parameterType="map" resultType="com.yoju360.mgmt.security.model.SysResource">
