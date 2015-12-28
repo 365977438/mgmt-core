@@ -43,11 +43,11 @@ public class ModelExampleHelper {
 		for (String field : keys) {
 			String uncameled = field.replaceAll(regex, replacement).toLowerCase();
 			sb.append(uncameled);
-			if (i<orderFields.size()-1)
-				sb.append(",");
 			sb.append(" ");
 			sb.append(orderFields.get(field));
 			i++;
+			if (i<orderFields.size())
+				sb.append(",");
 		}
 		if (sb.length()>0)
 			set.invoke(example, sb.toString());
