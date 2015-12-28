@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoju360.mgmt.common.mapper.GeoRegionMapper" >
+  <resultMap id="BaseResultMap" type="com.yoju360.mgmt.common.model.GeoRegion" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="lat" property="lat" jdbcType="VARCHAR" />
+    <result column="lng" property="lng" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="and (" suffix=")" >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </trim>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type, parent_id, name, code, lat, lng
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yoju360.mgmt.common.model.GeoRegionExample" >
+    select
+    <if test="example !=null and example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from geo_region where is_deleted = false 
+    <if test="example != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example != null and example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from geo_region
+    where id = #{id,jdbcType=BIGINT}
+     and is_deleted = false 
+  </select>
+  <update id="deleteByExample" parameterType="com.yoju360.mgmt.common.model.GeoRegionExample" >
+    update geo_region set is_deleted = true 
+    <if test="example != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <insert id="add" parameterType="com.yoju360.mgmt.common.model.GeoRegion" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into geo_region
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="lat != null" >
+        lat,
+      </if>
+      <if test="lng != null" >
+        lng,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null" >
+        #{lng,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExample" parameterType="map" >
+    update geo_region
+    set id = #{record.id,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=TINYINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      lat = #{record.lat,jdbcType=VARCHAR},
+      lng = #{record.lng,jdbcType=VARCHAR}
+    <if test="example != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="update" parameterType="com.yoju360.mgmt.common.model.GeoRegion" >
+    update geo_region
+    set type = #{type,jdbcType=TINYINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="count" resultType="java.lang.Integer" >
+    select count(*) from geo_region where is_deleted = false
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from geo_region where is_deleted = false
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from geo_region where is_deleted = false
+     limit #{start},#{count} 
+  </select>
+  <select id="selectByExamplePage" resultMap="BaseResultMap" parameterType="map" >
+    select * from (select 
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from geo_region where is_deleted = false 
+    <if test="example.oredCriteria != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    ) a limit #{start},#{count} 
+  </select>
+  <update id="delete" parameterType="java.lang.Long" >
+    update geo_region
+    set is_deleted = true where is_deleted = false and id = #{_parameter}
+  </update>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from geo_region where is_deleted = false 
+    <if test="example != null and example.oredCriteria != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="isUniqueAmongOthers" parameterType="map" resultType="java.lang.Boolean" >
+    select count(1) <![CDATA[ <= ]]> 0 from geo_region where ${columnName} = #{value} and is_deleted = false 
+    <if test="id != null" >
+       and id != #{id}
+    </if>
+  </select>
+  <select id="getProvinces" resultType="map">
+  	select id, name from geo_region where type = 1
+  </select>
+  <select id="getCities" parameterType="java.lang.Long" resultType="map">
+  	select id, name from geo_region where type = 2
+  	<if test="provinceId != null">
+  		and parent_id = #{provinceId}
+  	</if>
+  </select>
+  <select id="getRegions" parameterType="java.lang.Long" resultType="map">
+  	select id, name from geo_region where type = 3
+  	<if test="cityId != null">
+  		and parent_id = #{cityId}
+  	</if>
+  </select>
+</mapper>
