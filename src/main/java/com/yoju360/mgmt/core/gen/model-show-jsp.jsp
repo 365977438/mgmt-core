@@ -1,7 +1,7 @@
 <form class="form-horizontal">
 	<#list modelFields as field>
 		<#if field.id>
-	<input type="hidden" name="${idField}" id="${idField}" value="${r'${(model.'}${field.name}${r')!}'}"/>
+	<input type="hidden" name="${idField}" value="${r'${(model.'}${field.name}${r')!}'}"/>
 		<#elseif field.name!="isDeleted" && field.type="java.lang.Boolean">
 	<div class="form-group">
 		<label class="control-label col-xs-12 col-sm-3 no-padding-right"
@@ -9,7 +9,7 @@
 
 		<div class="col-xs-12 col-sm-2">
 			<div class="clearfix">
-				<input type="checkbox" class="ace" name="${field.name}" id="${field.name}" ${r'<#if model??&&model.'}${field.name}>checked${r'</#if>'} disabled="disabled"/>
+				<input type="checkbox" class="ace" name="${field.name}" ${r'<#if model??&&model.'}${field.name}>checked${r'</#if>'} disabled="disabled"/>
 				<span class="lbl"></span>
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
-				<input type="text" name="${field.name}" id="${field.name}" value="${r'${(model.'}${field.name}${r')!}'}"
+				<input type="text" name="${field.name}" value="${r'${(model.'}${field.name}${r')!}'}"
 					class="col-xs-12 col-sm-5" readonly="readonly"/>
 			</div>
 		</div>
