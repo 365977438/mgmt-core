@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	var ns_${modelNameUncamel} = {};
-
+	<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_VIEW')>
 	ns_${modelNameUncamel}.viewDetail = function(id) {
 		var viewDialog = new BootstrapDialog({
 			cssClass: 'details-dialog',
@@ -20,7 +20,8 @@
         });
 		viewDialog.open();
 	};
-	
+	</${"#"}if>
+	<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_EDIT')>
 	ns_${modelNameUncamel}.add = function(id) {
 		sys.goInTab('${modelNameUncamel}_index', sys.basePath + '/${modelNameUncamel}/edit.do', '添加${modelDesc}');
 	};
@@ -28,7 +29,8 @@
 	ns_${modelNameUncamel}.edit = function(id) {
 		sys.goInTab('${modelNameUncamel}_index', sys.basePath + '/${modelNameUncamel}/edit.do?id=' + id, '编辑${modelDesc}');
 	};
-	
+	</${"#"}if>
+	<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_DEL')>
 	ns_${modelNameUncamel}.del = function(id) {
 		var delConfirmDialog = new BootstrapDialog({
         	closable: true,
@@ -139,7 +141,7 @@
         });
 		delConfirmDialog.open();
 	};
-	
+	</${"#"}if>
 	jQuery(function($) {
 		//initiate dataTables plugin
 		ns_${modelNameUncamel}.oTable = 
@@ -256,10 +258,14 @@
 <!-- div.dataTables_borderWrap -->
 <div class="clearfix">
 	<div class="pull-left">
+	<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_VIEW')>
        	<button class="btn btn-sm btn-info" onclick="javascript:ns_${modelNameUncamel}.add();">
        		<i class="fa fa-plus-square"></i>&nbsp;&nbsp;添加</button>
+    </${"#"}if>
+    <${"#"}if SecurityUtils.hasPermission('${mgmtCode}_DEL')>
 		<button class="delete btn btn-sm btn-danger" onclick="javascript:ns_${modelNameUncamel}.delSelected();">
 			<i class="fa fa-trash"></i>&nbsp;&nbsp;删除</button>
+	</${"#"}if>
   	</div>
 	<div class="pull-right tableTools-container" id="${modelNameUncamel}_tableTools-container">
 	</div>
