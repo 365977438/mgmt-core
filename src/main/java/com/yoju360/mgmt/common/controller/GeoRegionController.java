@@ -63,4 +63,20 @@ public class GeoRegionController extends BaseController<GeoRegion>{
 		List<Map<String, Object>> regions = geoRegionService.getRegions(cityId);
 		writeJson(regions, response);
 	}
+	
+	/**
+	 * 获取地址拼接文本信息（如：广东省广州市天河区）
+	 * @param provinceId
+	 * @param cityId
+	 * @param regionId
+	 * @return
+	 */
+	@RequestMapping(value = "/getFullyAreaPrefix.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String getFullyAreaPrefix(
+			@RequestParam(value = "provinceId", required = true)Long provinceId,
+			@RequestParam(value = "cityId", required = true)Long cityId,
+			@RequestParam(value = "regionId", required = true)Long regionId) {
+		return 	geoRegionService.getFullyAreaPrefix(provinceId, cityId, regionId);
+	}
 }

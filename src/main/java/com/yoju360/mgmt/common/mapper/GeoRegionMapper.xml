@@ -11,7 +11,7 @@
     <result column="lng" property="lng" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
-    <trim prefix="and (" suffix=")" >
+    <trim prefix="where " >
       <foreach collection="example.oredCriteria" item="criteria" separator="or" >
         <if test="criteria.valid" >
           <trim prefix="(" suffix=")" prefixOverrides="and" >
@@ -77,7 +77,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from geo_region where is_deleted = false 
+    from geo_region
     <if test="example != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,14 +90,7 @@
     <include refid="Base_Column_List" />
     from geo_region
     where id = #{id,jdbcType=BIGINT}
-     and is_deleted = false 
   </select>
-  <update id="deleteByExample" parameterType="com.yoju360.mgmt.common.model.GeoRegionExample" >
-    update geo_region set is_deleted = true 
-    <if test="example != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <insert id="add" parameterType="com.yoju360.mgmt.common.model.GeoRegion" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -168,18 +161,17 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="count" resultType="java.lang.Integer" >
-    select count(*) from geo_region where is_deleted = false
+    select count(*) from geo_region
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from geo_region where is_deleted = false
+    from geo_region
   </select>
   <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
-    from geo_region where is_deleted = false
-     limit #{start},#{count} 
+    from geo_region limit #{start},#{count} 
   </select>
   <select id="selectByExamplePage" resultMap="BaseResultMap" parameterType="map" >
     select * from (select 
@@ -187,7 +179,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from geo_region where is_deleted = false 
+    from geo_region
     <if test="example.oredCriteria != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -196,18 +188,14 @@
     </if>
     ) a limit #{start},#{count} 
   </select>
-  <update id="delete" parameterType="java.lang.Long" >
-    update geo_region
-    set is_deleted = true where is_deleted = false and id = #{_parameter}
-  </update>
   <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
-    select count(*) from geo_region where is_deleted = false 
+    select count(*) from geo_region 
     <if test="example != null and example.oredCriteria != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <select id="isUniqueAmongOthers" parameterType="map" resultType="java.lang.Boolean" >
-    select count(1) <![CDATA[ <= ]]> 0 from geo_region where ${columnName} = #{value} and is_deleted = false 
+    select count(1) <![CDATA[ <= ]]> 0 from geo_region where ${columnName} = #{value}
     <if test="id != null" >
        and id != #{id}
     </if>

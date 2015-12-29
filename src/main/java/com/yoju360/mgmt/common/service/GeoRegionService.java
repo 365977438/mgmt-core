@@ -41,4 +41,8 @@ public class GeoRegionService extends AbstractCoreService<GeoRegion, GeoRegionEx
 		return geoRegionMapper.getRegions(cityId);
 	}
 
+	public String getFullyAreaPrefix(Long provinceId, Long cityId, Long regionId) {
+		return getModel(provinceId).getName() + getModel(cityId).getName() + getModel(regionId).getName();
+	}
+
 }
