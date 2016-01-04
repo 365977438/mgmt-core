@@ -58,7 +58,7 @@
 									sys.alertInfo(response.msg, "success");
 									ns_${modelNameUncamel}.oTable.ajax.reload();
 								}else {
-									console.error(response.msg);
+									dialogRef.close();
 									sys.alertInfo(response.msg, "warning");
 								}
 							},
@@ -192,7 +192,7 @@
 												</${"#"}if>
 												<${"#"}if SecurityUtils.hasPermission('${mgmtCode}_EDIT')>
 												html += '<li>\
-													<a title="编辑" href="javascript:ns_${modelNameUncamel}.edit(' + data + '); class="tooltip-success" data-rel="tooltip" title="Edit">\
+													<a title="编辑" href="javascript:ns_${modelNameUncamel}.edit(' + data + ');" class="tooltip-success" data-rel="tooltip" title="Edit">\
 														<span class="green">\
 															<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>\
 														</span>\
