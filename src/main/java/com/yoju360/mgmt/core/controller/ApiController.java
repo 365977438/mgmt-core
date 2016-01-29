@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import com.yoju360.mgmt.core.util.ApiUtils;
@@ -24,6 +26,7 @@ import com.yoju360.mgmt.core.util.ApiUtils;
  */
 @SuppressWarnings("rawtypes")
 public abstract class ApiController extends BaseController{
+	private static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 	
 	protected String getRequestParameter(HttpServletRequest request, String name, boolean required) {
 		String value = request.getParameter(name);
@@ -84,6 +87,7 @@ public abstract class ApiController extends BaseController{
 		Map<String, Object> messageMap = new HashMap<String, Object>();
 		messageMap.put("code", code);
 		messageMap.put("msg", msg);
+		logger.info("Api response: " + messageMap);
 		writeJson(messageMap, response);
 	}
 	/**
