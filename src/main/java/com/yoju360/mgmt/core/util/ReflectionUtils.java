@@ -36,7 +36,7 @@ public class ReflectionUtils {
 		return objectAsMap;
 	}
 	
-	public static Object map2Object(Map<String, Object> map, Object obj) {
+	public static Object map2Object(Map<String, ? extends Object> map, Object obj) {
 		try {
 			BeanInfo info = Introspector.getBeanInfo(obj.getClass());
 			for (String field : map.keySet()) {
